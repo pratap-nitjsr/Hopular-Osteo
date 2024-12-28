@@ -437,12 +437,12 @@ class CSVDataset(BaseDataset, metaclass=ABCMeta):
         """
         super(CSVDataset, self).__init__()
         self.__dataset_name = dataset_name
-        self.__target_numeric = np.asarray([] if target_numeric is None else target_numeric, dtype=np.long)
-        self.__target_discrete = np.asarray([] if target_discrete is None else target_discrete, dtype=np.long)
+        self.__target_numeric = np.asarray([] if target_numeric is None else target_numeric, dtype=np.int64)
+        self.__target_discrete = np.asarray([] if target_discrete is None else target_discrete, dtype=np.int64)
         self.__feature_numeric = np.asarray([] if feature_numeric is None else np.union1d(
-            np.array(feature_numeric).reshape(-1), np.array(self.__target_numeric).reshape(-1)), dtype=np.long)
+            np.array(feature_numeric).reshape(-1), np.array(self.__target_numeric).reshape(-1)), dtype=np.int64)
         self.__feature_discrete = np.asarray([] if feature_discrete is None else np.union1d(
-            np.array(feature_discrete).reshape(-1), np.array(self.__target_discrete).reshape(-1)), dtype=np.long)
+            np.array(feature_discrete).reshape(-1), np.array(self.__target_discrete).reshape(-1)), dtype=np.int64)
         assert (len(self.__feature_numeric) + len(self.__feature_discrete)) >= 1, r'Invalid features specified!'
         assert (len(self.__target_numeric) + len(self.__target_discrete)) >= 1, r'Invalid targets specified!'
         assert len(np.intersect1d(self.__feature_numeric, self.__feature_discrete)) == 0, r'Invalid features specified!'
@@ -514,7 +514,7 @@ class CSVDataset(BaseDataset, metaclass=ABCMeta):
             column_data = self.__data[:, column_index].copy()
             valid_sample_indices = np.arange(len(column_data))
             if (len(self.__data_missing_inverse) > 0) and (column_index in self.__data_missing_inverse):
-                missing_sample_indices = np.asarray(list(self.__data_missing_inverse[column_index]), dtype=np.long)
+                missing_sample_indices = np.asarray(list(self.__data_missing_inverse[column_index]), dtype=np.int64)
                 valid_sample_indices = np.setdiff1d(valid_sample_indices, missing_sample_indices)
                 column_data[missing_sample_indices] = float(0)
 
