@@ -1479,7 +1479,7 @@ class osteoDNADataset(CVDataset):
         :param split_index: index of the split to be used
         """
         super(osteoDNADataset, self).__init__(
-            dataset_name=r'uatdDna',
+            dataset_name=r'osteoDNA',
             feature_numeric=np.arange(0,483),
             feature_discrete=[483],
             target_numeric=None,
